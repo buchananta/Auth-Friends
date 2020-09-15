@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+import FriendForm from './FriendForm';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 export default function FriendsList() {
   const [ friends, setFriends ] = useState();
-  const [ error, setError ] = useState('');
+  const [ error, setError ] = useState();
   
   useEffect(() => {
     axiosWithAuth().get('/api/friends')
@@ -13,24 +14,29 @@ export default function FriendsList() {
         setFriends(res.data);
       })
       .catch(e => {
-        console.log(e.response.data.error);
+        console.log(e.response);
+        setError(e.response.status);
       })
   }, [])
 
   return (
-    <div className='friends-list'>
-      {friends
-        ? friends.map(friend => {
-          return (
-            <div className='friend' key={friend.id} > 
-              <h3>{friend.name}</h3>
-              <h4>{friend.email}</h4>
-              <p>Age: {friend.age} years</p>
-            </div>
-          )
-        })
-        : <p>loading...</p>
-      }
-    </div>
+    <>
+      {error && <h3>ERROR: {error}</h3> }
+      <div className='friends-list'>
+        {friends
+          ? friends.map(friend => {
+            return (
+              <div className='friend' key={friend.id} > 
+                <h3>{friend.name}</h3>
+                <h4>{friend.email}</h4>
+                <p>Age: {friend.age} years</p>
+              </div>
+            )
+          })
+          : !error && <h3>loading...</h3>
+        }
+      </div>
+      <FriendForm setFriends={setFriends} setError={setError} />
+    </>
   )
 }
