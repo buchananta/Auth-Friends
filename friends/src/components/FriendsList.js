@@ -31,6 +31,7 @@ export default function FriendsList() {
                 friend={friend}
                 setFriends={setFriends}
                 setError={setError}
+                key={friend.id}
               />
             )
           })
