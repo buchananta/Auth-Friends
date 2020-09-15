@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import axiosWithAuth from '../utils/axiosWithAuth';
+import EditForm from './EditForm';
 
 export default function Friend({ setFriends, setError, friend }) {
   const [edit, setEdit] = useState(false);
@@ -9,14 +10,15 @@ export default function Friend({ setFriends, setError, friend }) {
   const deleteFriend = () => {
     axiosWithAuth().delete(`/api/friends/${friend.id}`)
       .then(res => {
-        console.log(res.data)
+        console.log(res.data);
         setFriends(res.data);
       })
   }
-
   if (edit) {
     return (
-      <p>editing...</p>
+      <div className='friend' key={friend.id} > 
+        <EditForm friend={friend} setFriends={setFriends} toggleEdit={toggleEdit} />  
+      </div>
     )
   }
   return (
