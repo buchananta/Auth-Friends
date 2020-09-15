@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import FriendForm from './FriendForm';
+import Friend from './Friend';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 export default function FriendsList() {
@@ -26,11 +27,11 @@ export default function FriendsList() {
         {friends
           ? friends.map(friend => {
             return (
-              <div className='friend' key={friend.id} > 
-                <h3>{friend.name}</h3>
-                <h4>{friend.email}</h4>
-                <p>Age: {friend.age} years</p>
-              </div>
+              <Friend
+                friend={friend}
+                setFriends={setFriends}
+                setError={setError}
+              />
             )
           })
           : !error && <h3>loading...</h3>

@@ -42,6 +42,9 @@
   border: solid black 2px;
   margin: 3em;
   width: 14em;
-  height: 8em;
   padding: .5em 1em;
+}
+
+.friend p, h3, h4 {
+  margin: 0.5em;
 }
